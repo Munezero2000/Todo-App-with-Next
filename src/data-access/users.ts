@@ -6,6 +6,10 @@ export async function getTodo() {
   return await db.select().from(todo);
 }
 
+export async function getTodoById(id: string) {
+  return await db.query.todo.findFirst({ where: eq(todo.id, id) });
+}
+
 export async function createTodo(todoDTO: {
   title: string;
   description: string;
@@ -26,9 +30,16 @@ export async function updateTodo(
   }
 ) {
   const { title, description } = todoDTO;
+  console.log(id);
   const returnedTodo = await db
     .update(todo)
     .set({ title, description })
-    .where(eq(todo.id, id));
+    .where(eq(todo.id, id))
+    .returning();
+  console.log(returnedTodo);
   return returnedTodo;
+}
+
+export async function deleteTodo(id: string) {
+  return await db.delete(todo).where(eq(todo.id, id)).returning();
 }

@@ -1,4 +1,4 @@
-import { createTodo, getTodo } from "@/data-access/users";
+import { createTodo, getTodo, updateTodo } from "@/data-access/users";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -13,8 +13,4 @@ export async function POST(req: NextRequest) {
     message: "Todo created successfully",
     data: returnedTodo,
   });
-}
-
-export async function PUT(req: NextRequest) {
-    
 }
