@@ -1,4 +1,4 @@
-import { InferInsertModel, relations } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { text, boolean, pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const todo = pgTable("todos", {
@@ -30,5 +30,3 @@ export const todosRelations = relations(todo, ({ one }) => ({
     references: [users.id],
   }),
 }));
-
-export type NewUser = InferInsertModel<typeof users>;

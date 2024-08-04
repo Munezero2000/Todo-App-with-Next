@@ -1,4 +1,4 @@
-import { createTodo, getTodo, updateTodo } from "@/data-access/todo";
+import { createTodo, getTodo } from "@/data-access/todo";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
