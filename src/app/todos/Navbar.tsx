@@ -1,10 +1,16 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
+import { useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
+  const session = useSession();
   const links = [
+    {
+      label: "Create new todo",
+      href: "/todos/new",
+    },
     {
       label: "All Todos",
       href: "/todos",
@@ -18,15 +24,22 @@ const Navbar = () => {
       href: "/todos?filter=completed",
     },
   ];
-  const currentPath = usePathname();
-  console.log(currentPath);
+
+  const user = session.data?.user;
   return (
     <div className="min-w-60 px-1">
+      <div className="flex flex-col my-2  p-2 rounded-sm items-center">
+        <Avatar>
+          <AvatarImage src={user?.image!} />
+          <AvatarFallback>I</AvatarFallback>
+        </Avatar>
+        <p className="font-semibold">{user?.name!}</p>
+      </div>
       <nav className="flex fixed flex-col min-w-60">
         {links.map((link) => (
           <Link
             key={link.href}
-            className="my-1 divide-y bg-slate-900 text-white divide-slate-950 p-2 rounded-sm"
+            className="my-1 divide-y bg-slate-950 text-white divide-slate-950 p-2 rounded-sm"
             href={link.href}
           >
             {link.label}

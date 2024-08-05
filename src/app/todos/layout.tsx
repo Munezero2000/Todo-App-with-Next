@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Navbar from "./Navbar";
+import { SignIn } from "@/components/auth-button";
 
 const layout = ({
   children,
@@ -9,8 +10,13 @@ const layout = ({
 }>) => {
   return (
     <div>
-      <nav className="bg-slate-950 text-lg uppercase  sticky top-0 font-semibold text-white p-3">
-        Todo List Application
+      <nav className="flex items-center justify-between bg-slate-950  sticky top-0 font-semibold  p-3">
+        <Link href="/" className=" text-lg uppercase text-white">
+          Todo List Application
+        </Link>
+        <div>
+          <SignIn />
+        </div>
       </nav>
       <div className="flex">
         <Navbar />
