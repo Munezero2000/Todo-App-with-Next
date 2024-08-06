@@ -2,8 +2,8 @@ import db from "@/drizzle";
 import { todo } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export async function getTodo() {
-  return await db.select().from(todo);
+export async function getTodo(id: string) {
+  return await db.select().from(todo).where(eq(todo.createdBy, id));
 }
 
 export async function getTodoById(id: string) {
