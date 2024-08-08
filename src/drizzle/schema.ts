@@ -1,6 +1,8 @@
 import { relations } from "drizzle-orm";
-import { text, boolean, pgTable, timestamp, uuid, primaryKey, integer } from "drizzle-orm/pg-core";
+import { text, boolean, pgTable, timestamp, uuid, primaryKey, integer, pgEnum } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
+
+export const userRoles = pgEnum("role", ["ADMIN", "PLANNER"]);
 
 export const users = pgTable("user", {
   id: text("id")
@@ -10,26 +12,26 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  role: text("role"),
 });
 
-export const todo = pgTable("todos", {
+export const todos = pgTable("todo", {
   id: uuid("id").defaultRandom().primaryKey(),
   title: text("title").notNull(),
   description: text("description").notNull(),
   completed: boolean("completed").default(false).notNull(),
   createdBy: uuid("author_id"),
-  dueDate: timestamp("due_date"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
-  posts: many(todo),
+  todos: many(todos),
 }));
 
-export const todosRelations = relations(todo, ({ one }) => ({
+export const todosRelations = relations(todos, ({ one }) => ({
   author: one(users, {
-    fields: [todo.createdBy],
+    fields: [todos.createdBy],
     references: [users.id],
   }),
 }));

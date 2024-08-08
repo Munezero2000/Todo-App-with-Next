@@ -1,27 +1,27 @@
 import db from "@/drizzle";
-import { todo } from "@/drizzle/schema";
+import { todos } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export async function getTodo(id: string) {
-  return await db.select().from(todo).where(eq(todo.createdBy, id));
+export async function gettodos(id: string) {
+  return await db.select().from(todos).where(eq(todos.createdBy, id));
 }
 
-export async function getTodoById(id: string) {
-  return await db.query.todo.findFirst({ where: eq(todo.id, id) });
+export async function gettodosById(id: string) {
+  return await db.query.todos.findFirst({ where: eq(todos.id, id) });
 }
 
-export async function createTodo(todoDTO: { title: string; description: string }) {
-  const { title, description } = todoDTO;
-  const returnedTodo = await db.insert(todo).values({ title, description }).returning();
-  return returnedTodo;
+export async function createtodos(todosDTO: { title: string; description: string }) {
+  const { title, description } = todosDTO;
+  const returnedtodos = await db.insert(todos).values({ title, description }).returning();
+  return returnedtodos;
 }
 
-export async function updateTodo(id: string, todoDTO: { title: string; description: string }) {
-  const { title, description } = todoDTO;
-  const returnedTodo = await db.update(todo).set({ title, description }).where(eq(todo.id, id)).returning();
-  return returnedTodo;
+export async function updatetodos(id: string, todosDTO: { title: string; description: string }) {
+  const { title, description } = todosDTO;
+  const returnedtodos = await db.update(todos).set({ title, description }).where(eq(todos.id, id)).returning();
+  return returnedtodos;
 }
 
-export async function deleteTodo(id: string) {
-  return await db.delete(todo).where(eq(todo.id, id)).returning();
+export async function deletetodos(id: string) {
+  return await db.delete(todos).where(eq(todos.id, id)).returning();
 }

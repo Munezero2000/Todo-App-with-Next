@@ -26,6 +26,8 @@ const Navbar = () => {
   ];
 
   const user = session.data?.user;
+  const role = user?.role;
+  console.log(role);
   return (
     <div className="min-w-60 px-1">
       <div className="flex flex-col my-2  p-2 rounded-sm items-center">
