@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
-  const session = useSession();
+  const { data, status } = useSession();
   const links = [
     {
       label: "Create new todo",
@@ -25,17 +25,17 @@ const Navbar = () => {
     },
   ];
 
-  const user = session.data?.user;
-  const role = user?.role;
-  console.log(role);
+  console.log("DATA:", data?.user);
+  console.log("DATA:", data?.user);
   return (
     <div className="min-w-60 px-1">
       <div className="flex flex-col my-2  p-2 rounded-sm items-center">
         <Avatar>
-          <AvatarImage src={user?.image!} />
+          {/* <AvatarImage src={user?.image!} /> */}
           <AvatarFallback>I</AvatarFallback>
         </Avatar>
-        <p className="font-semibold">{user?.name!}</p>
+        {/* <p className="font-semibold">{user?.role!}</p> */}
+        {/* <p>{role}</p> */}
       </div>
       <nav className="flex fixed flex-col min-w-60">
         {links.map((link) => (

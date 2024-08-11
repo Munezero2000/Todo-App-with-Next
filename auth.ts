@@ -1,33 +1,39 @@
 import db from "@/drizzle";
-import NextAuth, { DefaultSession } from "next-auth";
+import NextAuth from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import Google from "next-auth/providers/google";
-import { AdapterUser } from "next-auth/adapters";
-
-type User = {
-  id: string;
-  role: string;
-} & DefaultSession["user"];
-
-declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: User;
-  }
-}
+import Google, { GoogleProfile } from "next-auth/providers/google";
+import { getUserByEmail } from "@/data-access/user";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
-  // providers: [Google],
   providers: [
     Google({
-      profile(profile) {
-        return { role: profile.role ?? "PLANNER", ...profile };
+      allowDangerousEmailAccountLinking: true,
+      profile(profile: GoogleProfile) {
+        return {
+          id: profile.sub,
+          role: "PLANNER",
+          image: profile.picture,
+          email: profile.email,
+          name: profile.name,
+        };
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
-    session({ session, token }) {
-      session.user.role = token;
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.role = token.role;
+      }
       return session;
     },
   },
