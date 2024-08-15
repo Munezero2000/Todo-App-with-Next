@@ -2,7 +2,7 @@ import db from "@/drizzle";
 import NextAuth from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Google, { GoogleProfile } from "next-auth/providers/google";
-import { getUserByEmail } from "@/data-access/user";
+import Credentials from "next-auth/providers/credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
@@ -19,7 +19,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         };
       },
     }),
+    Credentials({
+      credentials: {
+        username: { label: "Username" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize({ request }: any) {
+        const response = await fetch(request);
+        if (!response.ok) return null;
+        return (await response.json()) ?? null;
+      },
+    }),
   ],
+  pages: {
+    signIn: "/",
+  },
   session: {
     strategy: "jwt",
   },
