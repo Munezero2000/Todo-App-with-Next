@@ -2,6 +2,11 @@ import Link from "next/link";
 import React from "react";
 import Navbar from "./Navbar";
 import { SignIn } from "@/components/auth-button";
+import { Metadata } from "next";
+
+const metadata: Metadata = {
+  title: "Munezero",
+};
 
 const layout = ({
   children,
@@ -20,7 +25,7 @@ const layout = ({
       </nav>
       <div className="flex">
         <Navbar />
-        <div>{children}</div>
+        <div className="w-4/5 m-2">{children}</div>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 import Image from "next/image";
 import todoImage from "./../../public/todoImage.webp";
 import { SignIn } from "@/components/auth-button";
+import { Metadata } from "next";
+
+
 
 export default function Home() {
   return (

@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useSearchParams } from "next/navigation";
 
 const TodoList = () => {
-  const { data: todos, isLoading, } = useGetTodo();
+  const { data: todos, isLoading } = useGetTodo();
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter");
 

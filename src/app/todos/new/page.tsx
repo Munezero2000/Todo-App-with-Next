@@ -1,9 +1,10 @@
+"use client";
 import React from "react";
 import TodoForm from "./form";
 
 const page = () => {
   return (
-    <div className="p-2">
+    <div className="w-full  border p-2">
       <TodoForm />
     </div>
   );

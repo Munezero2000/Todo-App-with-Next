@@ -27,14 +27,15 @@ const Navbar = () => {
 
   console.log("DATA:", data?.user);
   console.log("DATA:", data?.user);
+  const user = data?.user;
   return (
-    <div className="min-w-60 px-1">
+    <div className="hidden md:block md:min-w-60 px-1">
       <div className="flex flex-col my-2  p-2 rounded-sm items-center">
         <Avatar>
-          {/* <AvatarImage src={user?.image!} /> */}
+          <AvatarImage src={user?.user?.image!} />
           <AvatarFallback>I</AvatarFallback>
         </Avatar>
-        {/* <p className="font-semibold">{user?.role!}</p> */}
+        <p className="font-semibold">{user?.user?.image}</p>
         {/* <p>{role}</p> */}
       </div>
       <nav className="flex fixed flex-col min-w-60">
